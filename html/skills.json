@@ -1,0 +1,28 @@
+{
+  "skills": [
+    {
+      "name": "Computer",
+      "skills": ["C", "C++", "C#", "Java", "Python", "CSS", "HTML"]
+    },
+    {
+      "name": "Architecture",
+      "skills": ["Vray", "3dsmax", "AutoCAD", "Revit", "Lumion"]
+    },
+    {
+      "name": "Drawing",
+      "skills": ["Model", "3D Printing", "Design", "2D Drawing", "Photoshop"]
+    },
+    {
+      "name": "Philosophy",
+      "skills": ["Philosophia", "Sociology", "Psychology", "Writing", "Speaking"]
+    },
+    {
+      "name": "Language",
+      "skills": ["English", "Chinese", "French"]
+    },
+    {
+      "name": "Soft Skills",
+      "skills": ["Communication", "Problem Solving", "Creativity", "Analytical Thinking", "Detail-Oriented"]
+    }
+  ]
+}

@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Hierarchical Edge Bundling</title>
-  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <title>Skill Visualization</title>
+  <style>
+    .node {
+      font: 10px sans-serif;
+    }
+
+    .link {
+      stroke: steelblue;
+      stroke-opacity: 0.5;
+      fill: none;
+      pointer-events: none;
+    }
+  </style>
 </head>
 <body>
-  <div id="chart"></div>
-
-  <script src="graph.js"></script>
+  <svg id="chart"></svg>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
