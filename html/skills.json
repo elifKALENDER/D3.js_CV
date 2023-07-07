@@ -1,28 +1,38 @@
 {
-  "skills": [
-    {
-      "name": "Computer",
-      "skills": ["C", "C++", "C#", "Java", "Python", "CSS", "HTML"]
-    },
-    {
-      "name": "Architecture",
-      "skills": ["Vray", "3dsmax", "AutoCAD", "Revit", "Lumion"]
-    },
-    {
-      "name": "Drawing",
-      "skills": ["Model", "3D Printing", "Design", "2D Drawing", "Photoshop"]
-    },
-    {
-      "name": "Philosophy",
-      "skills": ["Philosophia", "Sociology", "Psychology", "Writing", "Speaking"]
-    },
-    {
-      "name": "Language",
-      "skills": ["English", "Chinese", "French"]
-    },
-    {
-      "name": "Soft Skills",
-      "skills": ["Communication", "Problem Solving", "Creativity", "Analytical Thinking", "Detail-Oriented"]
-    }
+  "name": "Skills",
+  "children": [
+      {
+          "name": "Hard Skills",
+          "children": [
+              { "name": "C" },
+              { "name": "C++" },
+              { "name": "C#" },
+              { "name": "Java" },
+              { "name": "Python" },
+              { "name": "CSS" },
+              { "name": "HTML" },
+              { "name": "Vray" },
+              { "name": "3dsmax" },
+              { "name": "Autocad" },
+              { "name": "Revit" },
+              { "name": "Lumion" },
+              { "name": "Drawing" },
+              { "name": "Model" },
+              { "name": "3D Printing" },
+              { "name": "Design" },
+              { "name": "2D Drawing" },
+              { "name": "Photoshop" }
+          ]
+      },
+      {
+          "name": "Soft Skills",
+          "children": [
+              { "name": "Communication" },
+              { "name": "Problem Solving" },
+              { "name": "Creativity" },
+              { "name": "Analytical Thinking" },
+              { "name": "Detail-oriented" }
+          ]
+      }
   ]
 }
