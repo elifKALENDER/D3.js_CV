@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Radial Chart</title>
+  <!-- Load d3.js -->
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <!-- Function for radial charts -->
+  <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
+  <style>
+    /* Style the text labels */
+    .label {
+      font-size: 16px;
+      text-anchor: middle;
+      dominant-baseline: center;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; /* Change font-family here */
+    }
+
+    /* Adjust the size of the canvas */
+    #my_dataviz {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #my_dataviz svg {
+      max-width: 80%;
+      max-height: 80%;
+    }
+  </style>
+</head>
+<body>
+  <!-- Create a div where the graph will take place -->
+  <div id="my_dataviz"></div>
+
+  <script src="https://cdn.rawgit.com/niklasvh/html2canvas/0.5.0-beta4/dist/html2canvas.min.js"></script>
+  <script>
+	// Select the SVG element
+	var svgElement = document.querySelector("#my_dataviz svg");
+	
+	// Convert SVG to canvas using html2canvas
+	html2canvas(svgElement).then(function(canvas) {
+	  // Convert canvas to data URL
+	  var dataURL = canvas.toDataURL("image/png");
+	
+	  // Create a link element
+	  var downloadLink = document.createElement("a");
+	  downloadLink.href = dataURL;
+	  downloadLink.download = "radial_chart.png";
+	
+	  // Simulate a click on the download link
+	  downloadLink.click();
+	});
+
+  </script>
+
+  <script>
+    // Set the dimensions and margins of the graph
+	var margin = {top: 90, right: 40, bottom: 40, left: 40},
+    	width = 640 - margin.left - margin.right,
+    	height = 580 - margin.top - margin.bottom,
+    	innerRadius = 150,
+    	outerRadius = Math.min(width, height) / 2 - 40;
+
+
+    // Append the SVG object
+    var svg = d3.select("#my_dataviz")
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");
+
+    // Define the dataset
+    var dataset = {
+      "name": "Skills",
+      "children": [
+        {
+          "name": "Hard Skills",
+          "children": [
+            { "name": "C", "value": 40 },
+            { "name": "C++", "value": 20 },
+            { "name": "C#", "value": 60 },
+            { "name": "Java", "value": 50 },
+            { "name": "Python", "value": 30 },
+            { "name": "CSS", "value": 70 },
+            { "name": "HTML", "value": 70 },
+            { "name": "Vray", "value": 75 },
+            { "name": "3dsmax", "value": 80 },
+            { "name": "Autocad", "value": 95 },
+            { "name": "Revit", "value": 90 },
+            { "name": "Lumion", "value": 80 },
+            { "name": "Drawing", "value": 95 },
+            { "name": "Model", "value": 75 },
+            { "name": "3D Printing", "value": 50 },
+            { "name": "Design", "value": 85 },
+            { "name": "2D Drawing", "value": 95 },
+            { "name": "Photoshop", "value": 70 }
+          ]
+        },
+        {
+          "name": "Soft Skills",
+          "children": [
+            { "name": "Communication", "value": 80 },
+            { "name": "Problem Solving", "value": 95 },
+            { "name": "Creativity", "value": 90 },
+            { "name": "Analytical Thinking", "value": 85 },
+            { "name": "Detail-oriented", "value": 70 }
+          ]
+        }
+      ]
+    };
+
+    // Flatten the dataset to retrieve all skill entries
+    var skills = [];
+    dataset.children.forEach(function(category) {
+      category.children.forEach(function(skill) {
+        skill.category = category.name;  // Add category property to each skill
+        skills.push(skill);
+      });
+    });
+
+    // Compute the maximum value in the dataset
+    var maxSkillValue = d3.max(skills, function(d) { return d.value; });
+
+    // Scales
+    var x = d3.scaleBand()
+      .range([0, 2 * Math.PI])    // X axis goes from 0 to 2pi = all around the circle. If I stop at 1Pi, it will be around a half circle
+      .align(0)                  // This does nothing
+      .domain(skills.map(function(d) { return d.name; })); // The domain of the X axis is the list of skills
+    var y = d3.scaleRadial()
+      .range([innerRadius, outerRadius])   // Domain will be defined later
+      .domain([0, maxSkillValue]); // Domain of Y is from 0 to the maximum skill value
+
+    // Define colors for each skill category
+    var categoryColors = {
+      "Hard Skills": "#69b3a2",
+      "Soft Skills": "#ff7f0e"
+    };
+
+    // Add the bars
+    svg.append("g")
+      .selectAll("path")
+      .data(skills)
+      .enter()
+      .append("path")
+        .attr("fill", function(d) { return categoryColors[d.category]; })  // Assign color based on category
+        .attr("d", d3.arc()
+          .innerRadius(innerRadius)
+          .outerRadius(function(d) { return y(d.value); })
+          .startAngle(function(d) { return x(d.name); })
+          .endAngle(function(d) { return x(d.name) + x.bandwidth(); })
+          .padAngle(0)
+          .padRadius(innerRadius))
+        .attr("stroke", function(d) { return d.value >= 80 ? "black" : "none"; })  // Add stroke for bars with value >= 80
+
+    // Add the labels
+    svg.append("g")
+      .selectAll("g")
+      .data(skills)
+      .enter()
+      .append("g")
+        .attr("transform", function(d) {
+          var angle = (x(d.name) + x.bandwidth() / 2) * 180 / Math.PI - 90;
+          var radius = y(maxSkillValue) + 30; // Adjust the radius of the labels to be outside the bars
+          return "rotate(" + angle + ")" + "translate(" + radius + ",0)" + "rotate(" + (angle > 90 ? 180 : 0) + ")"; // Rotate the labels based on the angle
+        })
+      .append("text")
+        .attr("class", "label")		
+        .text(function(d){return d.name;});    	
+
+  </script>
+</body>
+</html>

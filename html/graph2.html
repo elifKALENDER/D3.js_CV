@@ -10,9 +10,10 @@
   <style>
     /* Style the text labels */
     .label {
-      font-size: 11px;
+      font-size: 16px;
       text-anchor: middle;
-      dominant-baseline: central;
+      
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; /* Change font-family here */
     }
     
     /* Adjust the size of the canvas */
@@ -28,9 +29,9 @@
 
   <script>
     // Set the dimensions and margins of the graph
-    var margin = {top: 100, right: 0, bottom: 0, left: 0},
-      width = 460 - margin.left - margin.right,
-      height = 460 - margin.top - margin.bottom,
+    var margin = {top: 100, right: 40, bottom: 40, left: 40},
+      width = 500 - margin.left - margin.right,
+      height = 480 - margin.top - margin.bottom,
       innerRadius = 90,
       outerRadius = Math.min(width, height) / 2;   // The outerRadius goes from the middle of the SVG area to the border
 
@@ -49,34 +50,34 @@
         {
           "name": "Hard Skills",
           "children": [
-            { "name": "C", "value": 4.0 },
-            { "name": "C++", "value": 2.0 },
-            { "name": "C#", "value": 6.0 },
-            { "name": "Java", "value": 5.0 },
-            { "name": "Python", "value": 3.0 },
-            { "name": "CSS", "value": 7.0 },
-            { "name": "HTML", "value": 7.0 },
-            { "name": "Vray", "value": 7.5 },
-            { "name": "3dsmax", "value": 8.0 },
-            { "name": "Autocad", "value": 9.5 },
-            { "name": "Revit", "value": 9.0 },
-            { "name": "Lumion", "value": 8.0 },
-            { "name": "Drawing", "value": 9.5 },
-            { "name": "Model", "value": 7.5 },
-            { "name": "3D Printing", "value": 5.0 },
-            { "name": "Design", "value": 8.5 },
-            { "name": "2D Drawing", "value": 9.5 },
-            { "name": "Photoshop", "value": 7.0 }
+            { "name": "C", "value": 40 },
+            { "name": "C++", "value": 20 },
+            { "name": "C#", "value": 60 },
+            { "name": "Java", "value": 50 },
+            { "name": "Python", "value": 30 },
+            { "name": "CSS", "value": 70 },
+            { "name": "HTML", "value": 70 },
+            { "name": "Vray", "value": 75 },
+            { "name": "3dsmax", "value": 80 },
+            { "name": "Autocad", "value": 95 },
+            { "name": "Revit", "value": 90 },
+            { "name": "Lumion", "value": 80 },
+            { "name": "Drawing", "value": 95 },
+            { "name": "Model", "value": 75 },
+            { "name": "3D Printing", "value": 50 },
+            { "name": "Design", "value": 85 },
+            { "name": "2D Drawing", "value": 95 },
+            { "name": "Photoshop", "value": 70 }
           ]
         },
         {
           "name": "Soft Skills",
           "children": [
-            { "name": "Communication", "value": 8.0 },
-            { "name": "Problem Solving", "value": 9.5 },
-            { "name": "Creativity", "value": 9.0 },
-            { "name": "Analytical Thinking", "value": 8.5 },
-            { "name": "Detail-oriented", "value": 7.0 }
+            { "name": "Communication", "value": 80 },
+            { "name": "Problem Solving", "value": 95 },
+            { "name": "Creativity", "value": 90 },
+            { "name": "Analytical Thinking", "value": 85 },
+            { "name": "Detail-oriented", "value": 70 }
           ]
         }
       ]
@@ -133,7 +134,7 @@
       .append("g")
         .attr("transform", function(d) {
           var angle = (x(d.name) + x.bandwidth() / 2) * 180 / Math.PI - 90;
-          var radius = y(maxSkillValue) + 20; // Adjust the radius of the labels to be outside the bars
+          var radius = y(maxSkillValue) + 30; // Adjust the radius of the labels to be outside the bars
           return "rotate(" + angle + ")" + "translate(" + radius + ",0)" + "rotate(" + (angle > 90 ? 180 : 0) + ")"; // Rotate the labels based on the angle
         })
       .append("text")
